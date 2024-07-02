@@ -1,9 +1,7 @@
 public class Pawn {
 
-    private Coords coords;
-    private boolean color;
-    private boolean canMove;
-    private boolean canTake;
+    protected Coords coords;
+    protected boolean color;
     private boolean alPaso;
 
     public Pawn(int x, int y, String color){
@@ -14,8 +12,6 @@ public class Pawn {
         } else {
             this.color = true;
         }
-        this.canMove = true;
-        this.canTake = false;
         this.alPaso = false;
     }
 
@@ -23,19 +19,10 @@ public class Pawn {
         this.coords.setCordX(0);
         this.coords.setCordY(0);
         this.color = false;
-        this.canMove = false;
-        this.canTake = false;
         this.alPaso = false;
     }
 
-    public void setCanMove(boolean canMove){
-        this.canMove = canMove;
-    }
-
     public void move(int numCasillas){
-        if(!canMove){
-            return;
-        }
         if(!color){
             move_white(numCasillas);
         } else {
@@ -83,9 +70,6 @@ public class Pawn {
      * dir = true, whites takes to the right
      */
     public void take(boolean dir){
-        if (!canTake) {
-            return;
-        }
         if (!color) {
             take_white(dir);
         } else {
@@ -111,6 +95,10 @@ public class Pawn {
             coords.setCordX(coords.getCordX()-1);
             coords.setCordY(coords.getCordY()-1);
         }
+    }
+
+    public boolean isValid(int newPosX, int newPosY){
+        return newPosX < 8 && newPosX >= 0 && newPosY < 8 && newPosY >= 0;
     }
 
     public void promote(){
